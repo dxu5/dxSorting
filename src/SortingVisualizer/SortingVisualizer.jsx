@@ -86,8 +86,10 @@ export default class SortingVisualizer extends React.Component {
       const isColorChange = i % 3 !== 2;
       if (isColorChange) {
         const [barOneIdx, barTwoIdx] = animations[i];
-        const barOneStyle = arrayBars[barOneIdx].style;
-        const barTwoStyle = arrayBars[barTwoIdx].style;
+        if (arrayBars[barOneIdx] !== undefined) {
+          const barOneStyle = arrayBars[barOneIdx].style;
+          const barTwoStyle = arrayBars[barTwoIdx].style;
+        }
         // const color =
         //   i % 3 === 0
         //     ? "black"
@@ -103,11 +105,13 @@ export default class SortingVisualizer extends React.Component {
       } else {
         setTimeout(() => {
           const [barOneIdx, newHeight] = animations[i];
-          const barOneStyle = arrayBars[barOneIdx].style;
-          barOneStyle.height = `${newHeight}px`;
-          barOneStyle.backgroundColor = this.calculateColor(
-            Number(barOneStyle.height.slice(0, -2))
-          );
+          if (arrayBars[barOneIdx] !== undefined) {
+            const barOneStyle = arrayBars[barOneIdx].style;
+            barOneStyle.height = `${newHeight}px`;
+            barOneStyle.backgroundColor = this.calculateColor(
+              Number(barOneStyle.height.slice(0, -2))
+            );
+          }
         }, i * ANIMATION_SPEED_MS);
       }
     }
